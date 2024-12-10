@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="GestionViajerosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Auditoria">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="Accion" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="FechaHora" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Documentos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TipoDocumento" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="NumeroDocumento" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="FechaExpiracion" Type="datetime" Nullable="false" />
+    <Property Name="IdViajero" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Movimientos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdViajero" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="Destino" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Origen" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TipoSolicitud" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IdUsuario" Type="int" Nullable="false" />
+    <Property Name="IdPuntoControl" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PuntosControl">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Ubicacion" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="CodigoControl" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreUsuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Correo" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Clave" Type="nvarchar" MaxLength="255" Nullable="false" />
+    <Property Name="Rol" Type="nvarchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Viajeros">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SegundoNombre" Type="nvarchar" MaxLength="50" />
+    <Property Name="Apellido1" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido2" Type="nvarchar" MaxLength="50" />
+    <Property Name="FechaNacimiento" Type="date" Nullable="false" />
+    <Property Name="Nacionalidad" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="CorreoElectronico" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Genero" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="Telefono" Type="nvarchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Auditoria_Usuarios">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Auditoria" Type="Self.Auditoria" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Auditoria">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Documentos_Viajeros">
+    <End Role="Viajeros" Type="Self.Viajeros" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Documentos" Type="Self.Documentos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Viajeros">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Documentos">
+        <PropertyRef Name="IdViajero" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Movimientos_PuntosControl">
+    <End Role="PuntosControl" Type="Self.PuntosControl" Multiplicity="1" />
+    <End Role="Movimientos" Type="Self.Movimientos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PuntosControl">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Movimientos">
+        <PropertyRef Name="IdPuntoControl" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Movimientos_Usuarios">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Movimientos" Type="Self.Movimientos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Movimientos">
+        <PropertyRef Name="IdUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Movimientos_Viajeros">
+    <End Role="Viajeros" Type="Self.Viajeros" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="Movimientos" Type="Self.Movimientos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Viajeros">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Movimientos">
+        <PropertyRef Name="IdViajero" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="GestionViajerosModelStoreContainer">
+    <EntitySet Name="Auditoria" EntityType="Self.Auditoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Documentos" EntityType="Self.Documentos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Movimientos" EntityType="Self.Movimientos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PuntosControl" EntityType="Self.PuntosControl" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Viajeros" EntityType="Self.Viajeros" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Auditoria_Usuarios" Association="Self.FK_Auditoria_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Auditoria" EntitySet="Auditoria" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Documentos_Viajeros" Association="Self.FK_Documentos_Viajeros">
+      <End Role="Viajeros" EntitySet="Viajeros" />
+      <End Role="Documentos" EntitySet="Documentos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Movimientos_PuntosControl" Association="Self.FK_Movimientos_PuntosControl">
+      <End Role="PuntosControl" EntitySet="PuntosControl" />
+      <End Role="Movimientos" EntitySet="Movimientos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Movimientos_Usuarios" Association="Self.FK_Movimientos_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Movimientos" EntitySet="Movimientos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Movimientos_Viajeros" Association="Self.FK_Movimientos_Viajeros">
+      <End Role="Viajeros" EntitySet="Viajeros" />
+      <End Role="Movimientos" EntitySet="Movimientos" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

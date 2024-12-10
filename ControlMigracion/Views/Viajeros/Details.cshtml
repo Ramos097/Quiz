@@ -1,0 +1,91 @@
+﻿@model ControlMigracion.Controllers.Viajeros
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Viajeros</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SegundoNombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SegundoNombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellido1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellido1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellido2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellido2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nacionalidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nacionalidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CorreoElectronico)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CorreoElectronico)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genero)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
